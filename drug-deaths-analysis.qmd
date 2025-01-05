@@ -1,0 +1,48 @@
+---
+title: "Analysis of drug-related death data"
+format:
+  html:
+    theme: darkly
+date: "2024-12-11"
+execute:
+  echo: false
+  message: false
+  warning: false
+  fig-width: 7
+  fig-height: 7
+  dpi: 300
+---
+
+```{r}
+
+library(data.table)
+library(ggplot2)
+src <- file.path(getwd(), "R/", list.files("R"))
+invisible(sapply(src, source))
+```
+##
+```{r}
+
+df <-
+  merge_drug_and_alcohol_deaths()
+
+plot_initial_additional(df, "both")
+
+```
+##
+```{r}
+#| fig-width: 10
+df <- get_non_poisoning_deaths()
+
+df <-
+  process_non_poisoning_data(df,
+    substance = "both",
+    groups = c(
+      "drug_group",
+      "death_cause"
+    ),
+    years = 2021
+    )
+
+plot_other_death_causes(df)
+```
