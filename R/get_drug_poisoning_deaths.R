@@ -2,8 +2,6 @@
 #  named: 'table1_all deaths_Cocaine version 1.xlsx'
 
 get_drug_poisoning_deaths <- function() {
-
-
   if (!file.exists("data/raw/drug_deaths_data.csv")) {
     # Load deaths data from Excel
     df <-

@@ -1,11 +1,10 @@
 get_life_tables <- function() {
   require(openxlsx)
-  require(data.table)
 
-  url <- "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/birthsdeathsandmarriages/lifeexpectancies/datasets/nationallifetablesunitedkingdomreferencetables/current/nltuk198020203.xlsx"
 
+  url <- "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/birthsdeathsandmarriages/lifeexpectancies/datasets/nationallifetablesenglandreferencetables/current/nlte198020213.xlsx"
   # Read data
-  df <- read.xlsx(
+  df <- openxlsx::read.xlsx(
     xlsxFile = url,
     sheet = "2020-2022",
     startRow = 6

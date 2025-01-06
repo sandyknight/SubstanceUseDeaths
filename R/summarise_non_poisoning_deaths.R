@@ -6,7 +6,7 @@
 #' area, death_cause, age, age_group, sex, treatment_status
 summarise_non_poisoning_deaths <-
   function(data, years = NULL, groups) {
-    require(data.table)
+
 
     if (!is.null(years)) {
       data <- data[year %in% years, ]

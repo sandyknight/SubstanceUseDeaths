@@ -12,4 +12,6 @@ RoxygenNote: 7.3.2
 Imports: 
     data.table,
     ggplot2,
-    openxlsx
+    openxlsx,
+    scales,
+    tinythemes

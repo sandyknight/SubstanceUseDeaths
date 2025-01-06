@@ -4,16 +4,18 @@
 #'
 #' @param data A data frame produced by `get_non_poisoning_deaths`
 #' @param years Vector of years to include in the analysis.
-#' @param groups Grouping variable: "area_name", "age", "sex", "death_cause", or NULL. Always grouped by year
+#' @param groups Grouping variable:
+#' "area_name", "age", "sex", "death_cause", or NULL. Always grouped by year
 #' @param by_treatment_status Whether to group by treatment status.
-#' @param substance_group Drugs only ("drugs"), alcohol only ("alcohol"), or both ("both")
+#' @param substance_group Drugs only ("drugs"),
+#' alcohol only ("alcohol"), or both ("both")
 #' @return A data table with grouped and summarised treatment data.
 process_non_poisoning_data <- function(data,
                                        years = c(2021, 2022),
                                        groups = NULL,
                                        by_treatment_status = TRUE,
                                        substance_group = "drugs") {
-  require(data.table)
+
   require(lubridate)
 
   # Always group by year
@@ -42,7 +44,7 @@ process_non_poisoning_data <- function(data,
       data <- data[death_cause == "Alcohol-specific death" | drug_group == "alcohol only", ]
 
 
-      message("\033[1;32m > Non-alcohol-specific deaths and treated for substsances other than alcohol have been exlcuded\033[0m")
+      message("> process_non_poisoning_data(): \033[1;32m Non-alcohol-specific deaths and treated for substsances other than alcohol have been exlcuded\033[0m")
     },
     "both" = {
       data
@@ -51,12 +53,9 @@ process_non_poisoning_data <- function(data,
   # Filter to chosen years
   data <- data[year %in% years, ]
 
-  # Group and summarise data
-  data[, .(count = .N), by = grouping_vars]
-
   # If grouped by sex column, standardise sex coding
 
-  if ("sex" %in% colnames(data)) {
+  if ("sex" %in% grouping_vars) {
     data[, sex := tolower(sex)]
   }
 

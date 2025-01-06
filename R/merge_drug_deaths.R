@@ -1,6 +1,5 @@
 merge_drug_deaths <-
-  function(groups = NULL) {
-
+  function(groups = NULL, categorise = TRUE) {
     if (is.null(groups)) {
       groups_poisoning <- c("drug_misuse_combined", "treatment_status")
     } else {
@@ -56,13 +55,27 @@ merge_drug_deaths <-
     non_poisoning_deaths <-
       non_poisoning_deaths[, ..select_cols, ]
 
-
-
     df <-
       data.table::rbindlist(l = list(
         poisoning_deaths,
         non_poisoning_deaths
       ), use.names = TRUE)
 
-    return(df)
+    if ("sex" %in% colnames(df)) {
+      df[, sex := data.table::fcase(sex == "M", "male",
+           sex == "F", "female",
+           default = sex
+         )]
+    }
+
+    if (isFALSE(categorise)) {
+      if (is.null(groups)) {
+        df[, .(count = sum(count))]
+      } else {
+        df[, .(count = sum(count)), by = groups]
+      }
+    } else {
+      groups <- c("category", groups)
+      df[, .(count = sum(count)), by = groups]
+    }
   }

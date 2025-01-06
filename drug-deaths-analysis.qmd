@@ -8,21 +8,20 @@ execute:
   echo: false
   message: false
   warning: false
-  fig-width: 7
+  fig-width: 10
   fig-height: 7
   dpi: 300
 ---
 
 ```{r}
-
+devtools::load_all()
 library(data.table)
 library(ggplot2)
-src <- file.path(getwd(), "R/", list.files("R"))
-invisible(sapply(src, source))
 ```
 ##
 ```{r}
-
+#| label: InitialAdditoinalDeathsPlot
+#| fig-height: 10
 df <-
   merge_drug_and_alcohol_deaths()
 
@@ -31,7 +30,7 @@ plot_initial_additional(df, "both")
 ```
 ##
 ```{r}
-#| fig-width: 10
+#| label: NonPoisoningDeathsPlot
 df <- get_non_poisoning_deaths()
 
 df <-
@@ -42,7 +41,17 @@ df <-
       "death_cause"
     ),
     years = 2021
-    )
+  )
 
 plot_other_death_causes(df)
+```
+##
+```{r}
+#| label: YLLPlot
+df <-
+  calculate_yll("both")
+
+plot_yll(df, "crude")
+
+plot_yll(df, "adjusted")
 ```

@@ -1,6 +1,6 @@
 get_ons_alcohol_specific_deaths <-
   function() {
-    require(data.table)
+    
 
     if (!file.exists("data/processed/ons_alcohol_specific_deaths.csv")) {
       url <-

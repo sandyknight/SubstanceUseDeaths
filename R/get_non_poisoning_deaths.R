@@ -2,7 +2,7 @@
 
 get_non_poisoning_deaths <-
   function() {
-    require(data.table)
+    
     if (file.exists("data/processed/non_poisoning_deaths_data.csv")) {
       df <- data.table::fread(
         "data/processed/non_poisoning_deaths_data.csv"

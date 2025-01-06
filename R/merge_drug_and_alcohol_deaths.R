@@ -1,6 +1,6 @@
 merge_drug_and_alcohol_deaths <-
   function() {
-    require(data.table)
+
     alcohol_deaths <-
       merge_alcohol_deaths()
 
@@ -34,7 +34,12 @@ or within a year of discharge (NDTMS)"
 
     df[, category := forcats::as_factor(category)]
 
-    df[, type := data.table::fifelse(grepl("NDTMS", category), "Additional deaths", "Initial deaths")][, type := forcats::as_factor(type)]
+    df[, type := data.table::fifelse(grepl("NDTMS", category),
+                                     "Additional deaths",
+                                     "Initial deaths")]
+
+    df[, type := forcats::as_factor(type)]
+
 
     return(df)
   }

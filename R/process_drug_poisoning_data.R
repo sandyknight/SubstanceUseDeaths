@@ -21,7 +21,7 @@ process_drug_poisoning_data <- function(data,
                                         groups = NULL,
                                         drug_groups = "total",
                                         misuse_only = TRUE) {
-  require(data.table)
+
 
   # Decide which date variable to use
   date_of_var <- switch(date_of,
